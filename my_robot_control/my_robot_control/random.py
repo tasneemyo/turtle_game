@@ -12,11 +12,12 @@ class Random(Node):
         me=Bool()
         self.publisher1=self.create_publisher(Pose,"pos_topic",10)
         self.call_set_spawn(me)
+        
         self.subscriber=self.create_subscription(Bool,"random_topic",self.subscribe,10)
         self.count=0
         
         
-        
+    
     def subscribe(self,msg:Bool):
         
         if msg.data:
@@ -24,7 +25,7 @@ class Random(Node):
             self.call_set_spawn(msg)
 
     def call_set_spawn(self,msg):
-        
+        self.count+=1
         client=self.create_client(Spawn,"/spawn")
         while not client.wait_for_service(1.0):
             self.get_logger().warn("waiting for service")
@@ -41,9 +42,8 @@ class Random(Node):
         pose.x=request.x
         pose.y=request.y
         pose.theta=theta
-        if self.count==0:
-            self.count+=1
-            continue
+       
+            
         self.publisher1.publish(pose)
         future=client.call_async(request) #-->send to controller
         future.add_done_callback(partial(self.call_back_set_spawn))
@@ -65,5 +65,6 @@ def main(args=None):
     node=Random()
     rclpy.spin(node)
     rclpy.shutdown()
+
 
    
