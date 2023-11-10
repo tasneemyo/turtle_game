@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 import rclpy
 from rclpy.node import Node
@@ -14,10 +15,7 @@ class Random(Node):
         self.call_set_spawn(me)
         
         self.subscriber=self.create_subscription(Bool,"random_topic",self.subscribe,10)
-        self.count=0
-        
-        
-    
+   
     def subscribe(self,msg:Bool):
         
         if msg.data:
@@ -25,7 +23,7 @@ class Random(Node):
             self.call_set_spawn(msg)
 
     def call_set_spawn(self,msg):
-        self.count+=1
+       
         client=self.create_client(Spawn,"/spawn")
         while not client.wait_for_service(1.0):
             self.get_logger().warn("waiting for service")
@@ -65,6 +63,8 @@ def main(args=None):
     node=Random()
     rclpy.spin(node)
     rclpy.shutdown()
+
+
 
 
    
