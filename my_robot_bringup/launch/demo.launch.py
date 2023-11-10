@@ -17,10 +17,10 @@ def generate_launch_description():
         package="my_robot_control",
         executable="kill"
     )
-    ld.add_action(random_node)
-    ld.add_action(move_node)
+    
     ld.add_action(kill_node)
-
+    ld.add_action(move_node)
+    ld.add_action(random_node)
     return ld
 
 
