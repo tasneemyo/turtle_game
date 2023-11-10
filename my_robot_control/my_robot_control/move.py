@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
@@ -27,7 +28,6 @@ class Turtle_GTG(Node):
         msg=Bool()
         self.flag=False
         new_vel = Twist()
-
         distance_to_goal = math.sqrt( (goal.x - self.pose.x)**2  + (goal.y - self.pose.y)**2 )
         
         angle_to_goal =math.atan2(goal.y - self.pose.y , goal.x - self.pose.x)
