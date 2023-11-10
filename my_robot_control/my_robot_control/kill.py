@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 import rclpy
 from rclpy.node import Node
@@ -10,11 +11,12 @@ class Killer(Node):
     def __init__ (self):
         super().__init__("kill")
         self.flag=False
-        self.count=3
+        self.count=2
+        self.publisher=self.create_publisher(Bool,"random_topic",10)
         self.subscription1=self.create_subscription(Bool,'kill_topic',self.listener,10)
     def listener(self,msg:Bool):
         if msg.data:
-            self.publisher=self.create_publisher(Bool,"random_topic",10)
+            #self.publisher=self.create_publisher(Bool,"random_topic",10)
             name=String()
             name.data="turtle"+str(self.count)
             self.call_set_kill(name)
@@ -54,4 +56,5 @@ def main(args=None):
  
     rclpy.spin(node)
     rclpy.shutdown()
+
 
